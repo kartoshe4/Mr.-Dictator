@@ -1,14 +1,14 @@
 package com.example.myapplication;
 
+
+import android.os.AsyncTask;
+
 import java.io.BufferedReader;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.util.Random;
 
 public class Person {
@@ -49,35 +49,48 @@ public class Person {
     public Person(long seed) {
         this.seed = seed;
         random = new Random(seed);
+        new APITask().execute();
     }
 
-    public void APIPerson() throws IOException {
+    private class APITask extends AsyncTask<Void, Void, String> {
 
-        InputStream inputStream = null;
+        @Override
+        protected String doInBackground(Void... voids) {
+            String URL = "https://api.randomdatatools.ru/";
+            HttpURLConnection connection = null;
+            StringBuilder stringBuilder = new StringBuilder();
+            try {
+                connection = (HttpURLConnection) new URL(URL).openConnection();
+                connection.setRequestMethod("GET");
+                connection.setUseCaches(false);
+                connection.setConnectTimeout(250);
+                connection.setReadTimeout(250);
+                connection.connect();
 
-        try {
-            URL url = new URL("https://api.randomdatatools.ru/");
-            HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-            int responseCode = httpURLConnection.getResponseCode();
+                if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                    BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 
-            if (responseCode == HttpURLConnection.HTTP_OK)
-            {
-                inputStream = httpURLConnection.getInputStream();
+                    String line;
+                    while ((line = in.readLine()) != null) {
+                        stringBuilder.append(line);
+                        stringBuilder.append("\n");
+                    }
+                }
 
-                int byteRead = -1;
-                byte[] buffer = new byte[1024];
-                while ((byteRead = inputStream.read(buffer)) != -1) {
-                    name = new String(buffer, 0, byteRead);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                if (connection != null) {
+                    connection.disconnect();
                 }
             }
 
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } finally {
-            inputStream.close();
+            return stringBuilder.toString();
         }
 
+        @Override
+        protected void onPostExecute(String result) {
+            name = result;
+        }
     }
 }
