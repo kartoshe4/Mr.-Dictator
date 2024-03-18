@@ -1,12 +1,14 @@
 package com.example.myapplication;
 
 import java.io.BufferedReader;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.Random;
 
 public class Person {
@@ -49,7 +51,7 @@ public class Person {
         random = new Random(seed);
     }
 
-    public void APIPerson() {
+    public void APIPerson() throws IOException {
 
         InputStream inputStream = null;
 
@@ -62,13 +64,19 @@ public class Person {
             {
                 inputStream = httpURLConnection.getInputStream();
 
-
+                int byteRead = -1;
+                byte[] buffer = new byte[1024];
+                while ((byteRead = inputStream.read(buffer)) != -1) {
+                    name = new String(buffer, 0, byteRead);
+                }
             }
 
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
+        } finally {
+            inputStream.close();
         }
 
     }
