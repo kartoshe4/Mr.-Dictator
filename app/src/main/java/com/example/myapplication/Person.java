@@ -7,11 +7,29 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Random;
 
 public class Person {
+
+    private static final String[] manName = {"Иван", "Максим", "Даниил", "Артем",
+        "Михаил", "Александр", "Дмитрий", "Кирилл", "Егор", "Никита", "Алексей",
+        "Денис", "Илья", "Сергей", "Тимофей", "Павел", "Андрей", "Владимир", "Станислав",
+        "Глеб", "Владислав", "Василий", "Роман", "Георгий", "Ярослав"};
+    private static final String[] manSurname = {"Иванов", "Петров", "Сидоров", "Кузнецов",
+            "Смирнов", "Васильев", "Попов", "Алексеев", "Егоров", "Лебедев", "Семенов",
+            "Ефимов", "Морозов", "Дмитриев", "Калинин", "Захаров", "Григорьев", "Исаев",
+            "Поляков", "Тимофеев", "Федоров", "Жуков", "Фролов", "Щербаков"};
+    private static final String[] womanName = {"София", "Анна", "Елизавета", "Мария",
+            "Виктория", "Анастасия", "Полина", "Екатерина", "Алиса", "Валерия",
+            "Вероника", "Ксения", "Арина", "Юлия", "Ольга", "Евгения", "Татьяна",
+            "Надежда", "Маргарита", "Ульяна", "Дарья", "Милана", "Алёна", "Ариадна", "Софья"};
+    private static final String[] womanSurname = {"Иванова", "Петрова", "Сидорова",
+            "Кузнецова", "Смирнова", "Васильева", "Попова", "Алексеева", "Егорова",
+            "Лебедева", "Семенова", "Ефимова", "Морозова", "Дмитриева", "Калинина",
+            "Захарова", "Григорьева", "Исаева", "Полякова", "Тимофеева", "Федорова",
+            "Жукова", "Фролова", "Щербакова"};
+
     private long seed;
     private Random random;
     private String name;
@@ -49,48 +67,20 @@ public class Person {
     public Person(long seed) {
         this.seed = seed;
         random = new Random(seed);
-        new APITask().execute();
-    }
 
-    private class APITask extends AsyncTask<Void, Void, String> {
+        if (random.nextInt(2) == 0)
+            gender = "man";
+        else
+            gender = "woman";
 
-        @Override
-        protected String doInBackground(Void... voids) {
-            String URL = "https://api.randomdatatools.ru/";
-            HttpURLConnection connection = null;
-            StringBuilder stringBuilder = new StringBuilder();
-            try {
-                connection = (HttpURLConnection) new URL(URL).openConnection();
-                connection.setRequestMethod("GET");
-                connection.setUseCaches(false);
-                connection.setConnectTimeout(250);
-                connection.setReadTimeout(250);
-                connection.connect();
-
-                if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                    BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-
-                    String line;
-                    while ((line = in.readLine()) != null) {
-                        stringBuilder.append(line);
-                        stringBuilder.append("\n");
-                    }
-                }
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                if (connection != null) {
-                    connection.disconnect();
-                }
-            }
-
-            return stringBuilder.toString();
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            name = result;
+        if (gender == "man")
+        {
+            name = manName[random.nextInt(25)];
+            surname = manSurname[random.nextInt(25)];
+        } else
+        {
+            name = womanName[random.nextInt(25)];
+            surname = womanSurname[random.nextInt(25)];
         }
     }
 }
