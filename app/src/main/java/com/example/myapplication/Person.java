@@ -1,71 +1,54 @@
 package com.example.myapplication;
 
 
-import android.os.AsyncTask;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.util.Arrays;
 import java.util.Random;
 
 public class Person {
 
-    private static final String[] manName = {"Иван", "Максим", "Даниил", "Артем",
+    private static final String[] MAN_NAME = {"Иван", "Максим", "Даниил", "Артем",
         "Михаил", "Александр", "Дмитрий", "Кирилл", "Егор", "Никита", "Алексей",
         "Денис", "Илья", "Сергей", "Тимофей", "Павел", "Андрей", "Владимир", "Станислав",
         "Глеб", "Владислав", "Василий", "Роман", "Георгий", "Ярослав"};
-    private static final String[] manSurname = {"Иванов", "Петров", "Сидоров", "Кузнецов",
+    private static final String[] MAN_SURNAME = {"Иванов", "Петров", "Сидоров", "Кузнецов",
             "Смирнов", "Васильев", "Попов", "Алексеев", "Егоров", "Лебедев", "Семенов",
             "Ефимов", "Морозов", "Дмитриев", "Калинин", "Захаров", "Григорьев", "Исаев",
             "Поляков", "Тимофеев", "Федоров", "Жуков", "Фролов", "Щербаков"};
-    private static final String[] womanName = {"София", "Анна", "Елизавета", "Мария",
+    private static final String[] WOMAN_NAME = {"София", "Анна", "Елизавета", "Мария",
             "Виктория", "Анастасия", "Полина", "Екатерина", "Алиса", "Валерия",
             "Вероника", "Ксения", "Арина", "Юлия", "Ольга", "Евгения", "Татьяна",
             "Надежда", "Маргарита", "Ульяна", "Дарья", "Милана", "Алёна", "Ариадна", "Софья"};
-    private static final String[] womanSurname = {"Иванова", "Петрова", "Сидорова",
+    private static final String[] WOMAN_SURNAME = {"Иванова", "Петрова", "Сидорова",
             "Кузнецова", "Смирнова", "Васильева", "Попова", "Алексеева", "Егорова",
             "Лебедева", "Семенова", "Ефимова", "Морозова", "Дмитриева", "Калинина",
             "Захарова", "Григорьева", "Исаева", "Полякова", "Тимофеева", "Федорова",
             "Жукова", "Фролова", "Щербакова"};
 
-    private long seed;
+    private static final String[] RACE = {"Европеоид", "Монголоид",
+            "Негроид", "Австралоид", "Америндоид"};
+
+    private static final String[] TRAIT = {"Образованность", "Толерантность", "Настойчивость",
+            "Догматичность", "Ксенофобия", "Коррупция",
+            "Безразличие", "Агрессивность", "Непримиримость"};
+
     private Random random;
     private String name;
     private String surname;
     private String gender;
     private String race;
     private String[] trait;
+    private int activity;
     private int loyalty;
+    private int popularity;
     private int age;
 
-    public String getName() {
-        return name + " " + surname;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public String getRace() {
-        return race;
-    }
-
-    public String[] getTrait() {
-        return trait;
-    }
-
-    public int getLoyalty() {
-        return loyalty;
-    }
-
-    public int getAge() {
-        return age;
+    @Override
+    public String toString() {
+        return  "\nname=" + name +
+                "\nsurname=" + surname + "\n";
     }
 
     public Person(long seed) {
-        this.seed = seed;
         random = new Random(seed);
 
         if (random.nextInt(2) == 0)
@@ -75,12 +58,26 @@ public class Person {
 
         if (gender == "man")
         {
-            name = manName[random.nextInt(25)];
-            surname = manSurname[random.nextInt(25)];
+            name = MAN_NAME[random.nextInt(25)];
+            surname = MAN_SURNAME[random.nextInt(25)];
         } else
         {
-            name = womanName[random.nextInt(25)];
-            surname = womanSurname[random.nextInt(25)];
+            name = WOMAN_NAME[random.nextInt(25)];
+            surname = WOMAN_SURNAME[random.nextInt(25)];
+        }
+
+        race = RACE[random.nextInt(5)];
+
+        age = random.nextInt(60) + 21;
+        activity = random.nextInt(51);
+        loyalty = random.nextInt(101);
+        popularity = random.nextInt(101);
+
+        trait = new String[2];
+
+        for (int i = 0; i < trait.length; i++)
+        {
+            trait[i] = TRAIT[random.nextInt(TRAIT.length)];
         }
     }
 }
