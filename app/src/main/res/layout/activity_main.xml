@@ -32,8 +32,8 @@
         android:id="@+id/health"
         android:layout_width="50dp"
         android:layout_height="100dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="40dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toStartOf="@+id/stable"
         app:layout_constraintTop_toTopOf="parent"></LinearLayout>
@@ -42,7 +42,7 @@
         android:id="@+id/stable"
         android:layout_width="50dp"
         android:layout_height="100dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="30dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toStartOf="@+id/constraintLayout"
@@ -53,7 +53,7 @@
         android:layout_width="50dp"
         android:layout_height="100dp"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="50dp"
         android:orientation="vertical"
         app:layout_constraintStart_toEndOf="@+id/constraintLayout"
         app:layout_constraintTop_toTopOf="parent"></LinearLayout>
@@ -62,8 +62,8 @@
         android:id="@+id/money"
         android:layout_width="50dp"
         android:layout_height="100dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="30dp"
         android:orientation="vertical"
         app:layout_constraintStart_toEndOf="@+id/army"
         app:layout_constraintTop_toTopOf="parent"></LinearLayout>
@@ -74,7 +74,7 @@
         android:layout_height="10dp"
         android:layout_marginTop="81dp"
         android:layout_marginBottom="69dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+        app:layout_constraintBottom_toBottomOf="@+id/imageArmy"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/stable"
@@ -83,7 +83,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/imageArmy"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginTop="10dp"
@@ -92,27 +92,25 @@
         app:srcCompat="@drawable/army" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/imageMedicine"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="30dp"
-        app:layout_constraintEnd_toStartOf="@+id/stable"
+        app:layout_constraintEnd_toEndOf="@+id/health"
         app:layout_constraintTop_toBottomOf="@+id/health"
         app:srcCompat="@drawable/health" />
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/imageMoney"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginStart="30dp"
         android:layout_marginTop="10dp"
-        app:layout_constraintStart_toEndOf="@+id/army"
+        app:layout_constraintStart_toStartOf="@+id/money"
         app:layout_constraintTop_toBottomOf="@+id/money"
         app:srcCompat="@drawable/money" />
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/imageStable"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginTop="10dp"
